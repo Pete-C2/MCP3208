@@ -4,7 +4,7 @@ import RPi.GPIO as GPIO
 class MCP3208(object):
     '''Python driver for [MCP3208 12-bit Analog-to-Digital Converter](http://www.microchip.com/downloads/en/DeviceDoc/21298e.pdf)
      Requires:
-     - The [GPIO Library](https://code.google.com/p/raspberry-gpio-python/) (Already on most Raspberry Pi OS builds)
+     - The [GPIO Library](https://sourceforge.net/projects/raspberry-gpio-python/) (Already on most Raspberry Pi OS builds)
      - A [Raspberry Pi](http://www.raspberrypi.org/)
 
     '''
@@ -48,7 +48,7 @@ class MCP3208(object):
 
         '''
         if channel > 7 or channel < 0:
-            raise Exception('MCP3208 channel out of range: ' + str(channel))
+            raise MCP3208Error('MCP3208 channel out of range: ' + str(channel))
         # Ensure data out is high
         GPIO.output(self.data_out_pin, GPIO.HIGH)
         

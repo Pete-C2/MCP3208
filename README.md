@@ -2,7 +2,7 @@
 Python driver for [MCP3208 12-bit Analog-to-Digital Converter](http://www.microchip.com/downloads/en/DeviceDoc/21298e.pdf)
 
 Requires:
-- The [GPIO Library](https://code.google.com/p/raspberry-gpio-python/) (Already on most Raspberry Pi OS builds)
+- The [GPIO Library](https://sourceforge.net/projects/raspberry-gpio-python/) (Already on most Raspberry Pi OS builds)
 - A [Raspberry Pi](http://www.raspberrypi.org/)
 
 ## Basic use
@@ -29,6 +29,10 @@ thermocouple.cleanup()
 See test_MCP3208.py for a test example.
 
 ## Changelog
+
+### V0.2
+
+- Amended test code to measure every channel and check handling of attempting to measure an invalid channel
 
 ### V0.1
 

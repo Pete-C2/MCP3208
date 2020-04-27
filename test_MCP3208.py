@@ -14,12 +14,13 @@ if __name__ == '__main__':
     running = True
     while(running):
         try:
-            try:
-                measurement = MCP3208_ADC.get()
-            except MAX31855Error as e:
-                measurement = "Error: "+ e.value
-                running = False
-            print("Measured value (ch0): {}".format(measurement))
+            for channel in range (0,9):
+                try:
+                    measurement = str(MCP3208_ADC.get(channel))
+                except MCP3208Error as e:
+                    measurement = "Error: "+ e.value
+                print("Measured value (ch%d): " % (channel) + measurement)
+            print("")
             time.sleep(1)
         except KeyboardInterrupt:
             running = False
