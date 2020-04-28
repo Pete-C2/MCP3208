@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import RPi.GPIO as GPIO
+import datetime
 
 class MCP3208(object):
     '''Python driver for [MCP3208 12-bit Analog-to-Digital Converter](http://www.microchip.com/downloads/en/DeviceDoc/21298e.pdf)
@@ -26,6 +27,10 @@ class MCP3208(object):
         self.data = None
         self.board = board
 
+        # Timing test
+        self.max_time = 0 # Real max will be larger
+        self.min_time = 1000 # Real min will be smaller
+
         # Initialize needed GPIO
         GPIO.setmode(self.board)
         GPIO.setup(self.cs_pin, GPIO.OUT)
@@ -49,6 +54,7 @@ class MCP3208(object):
         '''
         if channel > 7 or channel < 0:
             raise MCP3208Error('MCP3208 channel out of range: ' + str(channel))
+        start_time = datetime.datetime.now()
         # Ensure data out is high
         GPIO.output(self.data_out_pin, GPIO.HIGH)
         
@@ -111,6 +117,16 @@ class MCP3208(object):
         # Unselect the chip
         GPIO.output(self.cs_pin, GPIO.HIGH)
         # Save data
+        end_time = datetime.datetime.now()
+        duration = end_time - start_time
+        duration = duration.microseconds
+        if duration > self.max_time:
+            self.max_time = duration
+        if duration < self.min_time:
+            self.min_time = duration 
+        print ("Measurement duration: " + str(duration)+ 
+               "µs. (Min = " + str(self.min_time) +
+               "µs; Max = " + str(self.max_time) + "µs")
         return bytesin
 
     def cleanup(self):
