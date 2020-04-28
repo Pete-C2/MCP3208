@@ -54,7 +54,6 @@ class MCP3208(object):
         '''
         if channel > 7 or channel < 0:
             raise MCP3208Error('MCP3208 channel out of range: ' + str(channel))
-        start_time = datetime.datetime.now()
         # Ensure data out is high
         GPIO.output(self.data_out_pin, GPIO.HIGH)
         
@@ -100,6 +99,7 @@ class MCP3208(object):
         GPIO.output(self.clock_pin, GPIO.LOW)
 
         GPIO.output(self.clock_pin, GPIO.HIGH)
+        start_time = datetime.datetime.now()
         
         # Null bit
         GPIO.output(self.clock_pin, GPIO.LOW)
